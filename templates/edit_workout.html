@@ -29,7 +29,22 @@
         cols="60
         maxlength="1000" required>{{workout.description}}</textarea>
       </p>
+
       <input type="hidden" name="workout_id" value="{{ workout.id }}" />
+      {% for class in all_classes %}
+      <p>
+        {{ class }}: <br />
+        {% for option in all_classes[class] %}
+
+          {% if option in classes[class] %}
+          <input type="checkbox" name="class" value="{{ class }}:{{ option }}" checked /> {{ option }} <br />
+          {% else %}
+          <input type="checkbox" name="class" value="{{ class }}:{{ option }}" /> {{ option }} <br />
+          {% endif %}
+        {% endfor %}
+
+      </p>
+      {% endfor %}
       <input type="submit" value="Update" />
     </form>
   </body>

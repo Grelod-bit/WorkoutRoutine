@@ -79,8 +79,8 @@ def create_workout():
     classes = []
     for entry in request.form.getlist("class"):
         if entry:
-            parts = entry.split(":")
-            classes.append((parts[0], parts[1]))
+            my_title, value = entry.split(":")
+            classes.append((my_title, value))
     print(classes)
     workouts.add_workout(title, description, user_id, classes)
 
@@ -95,7 +95,18 @@ def edit_workout(workout_id):
         return abort(404)
     if workout["user_id"] != session["user_id"]:
         abort(403)
-    return render_template("edit_workout.html", workout=workout)
+
+    all_classes = workouts.get_all_classes()
+    classes = {}
+
+    for my_class in all_classes:
+        classes[my_class] = []
+    for entry in workouts.get_classes(workout_id):
+        classes[entry["title"]].append(entry["value"])
+
+    return render_template(
+        "edit_workout.html", workout=workout, classes=classes, all_classes=all_classes
+    )
 
 
 @app.route("/update_workout", methods=["POST"])
@@ -117,7 +128,13 @@ def update_workout():
     if not description or len(description) > 1000:
         abort(403)
 
-    workouts.update_workout(workout_id, title, description)
+    classes = []
+    for entry in request.form.getlist("class"):
+        if entry:
+            my_title, value = entry.split(":")
+            classes.append((my_title, value))
+
+    workouts.update_workout(workout_id, title, description, classes)
 
     return redirect("/workout/" + str(workout_id))
 

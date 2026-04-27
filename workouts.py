@@ -20,10 +20,9 @@ def add_workout(title, description, user_id, classes):
     VALUES (?, ?, ?)"""
     db.execute(sql, [title, description, user_id])
 
-    sql = "INSERT INTO workout_classes (workout_id, title, value) VALUES (?,?,?)"
-
     workout_id = db.last_insert_id()
 
+    sql = "INSERT INTO workout_classes (workout_id, title, value) VALUES (?,?,?)"
     for title, value in classes:
         db.execute(sql, [workout_id, title, value])
 
@@ -52,15 +51,24 @@ def get_workout(workout_id):
     return result[0] if result else None
 
 
-def update_workout(workout_id, title, description):
+def update_workout(workout_id, title, description, classes):
     sql = """UPDATE workouts SET
     title=?,
     description=?
     WHERE id = ?"""
     db.execute(sql, [title, description, workout_id])
 
+    sql = "DELETE FROM workout_classes WHERE workout_id = ?"
+    db.execute(sql, [workout_id])
+
+    sql = "INSERT INTO workout_classes (workout_id, title, value) VALUES (?,?,?)"
+    for title, value in classes:
+        db.execute(sql, [workout_id, title, value])
+
 
 def remove_workout(workout_id):
+    sql = "DELETE FROM workout_classes WHERE workout_id = ?"
+    db.execute(sql, [workout_id])
     sql = "DELETE FROM workouts WHERE id = ?"
     db.execute(sql, [workout_id])
 
