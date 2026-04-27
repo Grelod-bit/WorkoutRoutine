@@ -73,15 +73,19 @@ def create_workout():
     description = request.form["description"]
     if not description or len(description) > 1000:
         abort(403)
-
     user_id = session["user_id"]
 
+    all_classes = workouts.get_all_classes()
     classes = []
-    for entry in request.form.getlist("class"):
+    for entry in request.form.getlist("classes"):
         if entry:
-            my_title, value = entry.split(":")
-            classes.append((my_title, value))
-    print(classes)
+            class_title, class_value = entry.split(":")
+            if class_title not in all_classes:
+                abort(403)
+            if class_value not in all_classes[class_title]:
+                abort(403)
+            classes.append((class_title, class_value))
+
     workouts.add_workout(title, description, user_id, classes)
 
     return redirect("/")
@@ -128,11 +132,17 @@ def update_workout():
     if not description or len(description) > 1000:
         abort(403)
 
+    all_classes = workouts.get_all_classes()
+
     classes = []
-    for entry in request.form.getlist("class"):
+    for entry in request.form.getlist("classes"):
         if entry:
-            my_title, value = entry.split(":")
-            classes.append((my_title, value))
+            class_title, class_value = entry.split(":")
+            if class_title not in all_classes:
+                abort(403)
+            if class_value not in all_classes[class_title]:
+                abort(403)
+            classes.append((class_title, class_value))
 
     workouts.update_workout(workout_id, title, description, classes)
 
