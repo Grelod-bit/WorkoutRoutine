@@ -76,6 +76,7 @@ sqlite3 database.db < init.sql
 **Windows PowerShell:**
 ```bash
 Get-Content schema.sql | sqlite3 database.db
+Get-Content init.sql | sqlite3 database.db
 ```
 
 Start the application:
