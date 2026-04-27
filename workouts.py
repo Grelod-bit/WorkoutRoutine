@@ -74,9 +74,10 @@ def remove_workout(workout_id):
 
 
 def find_workout(query):
-    sql = """SELECT id, title
-    FROM workouts
-    WHERE title LIKE ? OR description LIKE ?
-    ORDER BY id DESC"""
+    sql = """SELECT w.id, w.title, classes.id, classes.title
+    FROM workouts w
+    JOIN workout_classes classes ON classes.workout_id=w.id
+    WHERE w.title LIKE ? OR w.description LIKE ? OR classes.title LIKE ? OR classes.value LIKE ?
+    ORDER BY w.id DESC"""
     like = "%" + query + "%"
-    return db.query(sql, [like, like])
+    return db.query(sql, [like, like, like, like])

@@ -8,8 +8,6 @@ import workouts
 import users
 import re
 
-# FIXME - Remove doesn't work with tags (classifications) selected!
-
 app = Flask(__name__)
 app.secret_key = config.secret_key
 
