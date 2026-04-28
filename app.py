@@ -48,10 +48,16 @@ def find_workout():
 @app.route("/workout/<int:workout_id>")
 def show_workout(workout_id):
     workout = workouts.get_workout(workout_id)
+    workout_ratings = workouts.get_ratings(workout_id)
     if not workout:
         return abort(404)
     classes = workouts.get_classes(workout_id)
-    return render_template("show_workout.html", workout=workout, classes=classes)
+    return render_template(
+        "show_workout.html",
+        workout=workout,
+        classes=classes,
+        workout_ratings=workout_ratings,
+    )
 
 
 @app.route("/new_workout")
@@ -165,6 +171,34 @@ def remove_workout(workout_id):
             return redirect("/")
         else:
             return redirect("/workout/" + str(workout_id))
+
+
+@app.route("/rate/<int:workout_id>")
+def comment(workout_id):
+    require_login()
+    workout = workouts.get_workout(workout_id)
+    if not workout:
+        abort(404)
+
+    return render_template("rate_workout.html", workout=workout)
+
+
+@app.route("/rate_workout", methods=["POST"])
+def rate_workout():
+    require_login()
+
+    user_id = session["user_id"]
+    workout_id = request.form["workout_id"]
+    rating = request.form["rating"]
+    if not re.fullmatch(r"0|[1-9]|10", rating):
+        abort(403)
+    comment = request.form["comment"]
+    if not comment or len(comment) > 5000:
+        abort(403)
+
+    workouts.rate_workout(user_id, workout_id, rating, comment)
+
+    return redirect("/workout/" + str(workout_id))
 
 
 @app.route("/register")

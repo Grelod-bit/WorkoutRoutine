@@ -24,4 +24,13 @@ CREATE TABLE workout_classes (
     value TEXT
 );
 
+CREATE TABLE ratings (
+    id INTEGER PRIMARY KEY,
+    user_id INTEGER REFERENCES users,
+    workout_id INTEGER REFERENCES workouts,
+    rating INTEGER,
+    comment TEXT,
+    sent_at TEXT
+);
+
 

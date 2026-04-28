@@ -29,9 +29,25 @@
       </ul>
     </p>
     {% endif %}
+    {% if session.user_id != workout.user_id %}
+    <p>
+      <a href="/rate/{{ workout.id }}">Rate</a>
+    </p>
+    {% endif %}
 
     <p>
       <a href="/">Front Page</a>
     </p>
+
+    {% if workout_ratings %}
+    <p>
+    <h2>Ratings:</h2>
+    <ul>
+      {% for user_rating in workout_ratings %}
+      <li>{{user_rating.username}} - {{ user_rating.comment }} | Rating: {{ user_rating.rating }} | Posted at: ({{ user_rating.sent_at }})</li>
+      {% endfor %}
+    </ul>
+    </p>
+    {% endif %}
   </body>
 </html>

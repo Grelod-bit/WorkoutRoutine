@@ -81,3 +81,18 @@ def find_workout(query):
     ORDER BY w.id DESC"""
     like = "%" + query + "%"
     return db.query(sql, [like, like, like, like])
+
+
+def rate_workout(user_id, workout_id, rating, comment):
+    sql = """INSERT INTO ratings
+    (user_id, workout_id, rating, comment, sent_at)
+    VALUES (?, ?, ?, ?, datetime('now'))"""
+    db.execute(sql, [user_id, workout_id, rating, comment])
+
+
+def get_ratings(workout_id):
+    sql = """SELECT r.id, r.rating, r.comment, r.sent_at, u.username
+    FROM ratings r
+    LEFT JOIN users u on r.user_id = u.id
+    WHERE r.workout_id = ?"""
+    return db.query(sql, [workout_id])

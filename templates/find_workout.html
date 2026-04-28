@@ -17,23 +17,21 @@
           title="Enter at least one letter or number; punctuation-only searches are not allowed."
         />
       </p>
-      <input type="submit" value="Send" />
+      <input type="submit" value="Search" />
     </form>
 
     <p>
       <a href="/">Return</a>
     </p>
 
-
-
     {% if query %}
     <h2>Results</h2>
 
     <ul>
       {% for workout in results %}
-        <li><a href="/workout/{{ workout.id }}">{{ workout.title }}</a></li>
+      <li><a href="/workout/{{ workout.id }}">{{ workout.title }}</a></li>
       {% else %}
-        <li>No matches found.</li>
+      <li>No matches found.</li>
       {% endfor %}
     </ul>
     {% endif %}
