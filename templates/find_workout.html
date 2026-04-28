@@ -23,12 +23,17 @@
     <p>
       <a href="/">Return</a>
     </p>
+
+
+
     {% if query %}
     <h2>Results</h2>
 
     <ul>
       {% for workout in results %}
-      <li><a href="/workout/{{ workout.id }}">{{ workout.title }}</a></li>
+        <li><a href="/workout/{{ workout.id }}">{{ workout.title }}</a></li>
+      {% else %}
+        <li>No matches found.</li>
       {% endfor %}
     </ul>
     {% endif %}
