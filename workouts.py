@@ -93,6 +93,15 @@ def rate_workout(user_id, workout_id, rating, comment):
 def get_ratings(workout_id):
     sql = """SELECT r.id, r.rating, r.comment, r.sent_at, u.username
     FROM ratings r
-    LEFT JOIN users u on r.user_id = u.id
+    LEFT JOIN users u ON r.user_id = u.id
     WHERE r.workout_id = ?"""
     return db.query(sql, [workout_id])
+
+
+def get_user_ratings(user_id):
+    sql = """SELECT r.id, r.rating, r.comment, r.sent_at, r.workout_id, u.username, w.title
+    FROM ratings r
+    LEFT JOIN users u ON r.user_id = u.id
+    LEFT JOIN workouts w ON r.workout_id = w.id
+    WHERE r.user_id = ?"""
+    return db.query(sql, [user_id])

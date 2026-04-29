@@ -6,16 +6,30 @@
 
   <body>
     <h1>User {{user.username}}</h1>
-    {% if workouts|count == 1 %}
-    <p>User {{user.username}} has a total of {{ workouts|count }} workout.</p>
+
+    <p>User {{user.username}} has a total of :</p>
+
+    {% if user_workouts|count == 1 %}
+    <p>{{ user_workouts|count }} workout</p>
     {% else %}
-    <p>User {{user.username}} has a total of {{ workouts|count }} workouts.</p>
+    <p>{{ user_workouts|count }} workouts</p>
+    {% endif %} {% if user_ratings|count == 1 %}
+    <p>{{ user_ratings|count }} rating</p>
+    {% else %}
+    <p>{{ user_ratings|count }} ratings</p>
     {% endif %}
 
     <h2>Workouts</h2>
     <ul>
-      {% for workout in workouts %}
+      {% for workout in user_workouts %}
       <li><a href="/workout/{{ workout.id }}">{{ workout.title }}</a></li>
+      {% endfor %}
+    </ul>
+
+    <h2>Reviews</h2>
+    <ul>
+      {% for rating in user_ratings | unique(attribute='workout_id') %}
+      <li><a href="/workout/{{ rating.workout_id }}">{{ rating.title }}</a></li>
       {% endfor %}
     </ul>
     <p>

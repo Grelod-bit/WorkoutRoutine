@@ -28,8 +28,14 @@ def show_user(user_id):
     user = users.get_user(user_id)
     if not user:
         return abort(404)
-    workouts = users.get_workouts(user_id)
-    return render_template("show_user.html", user=user, workouts=workouts)
+    user_workouts = users.get_workouts(user_id)
+    user_ratings = workouts.get_user_ratings(user_id)
+    return render_template(
+        "show_user.html",
+        user=user,
+        user_workouts=user_workouts,
+        user_ratings=user_ratings,
+    )
 
 
 @app.route("/find_workout")

@@ -8,11 +8,13 @@
     <h1>Rate {{ workout.title }}</h1>
     <form action="/rate_workout" method="post">
       <p>
-        rate: <br />
+        rate 0 / 10: <br />
         <input
           type="text"
           name="rating"
           size="2"
+          maxlength="2"
+          required
           pattern="0|[1-9]|10"
           title="Enter a number from 0 to 10"
         />
