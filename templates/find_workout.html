@@ -31,7 +31,7 @@
       {% for workout in results %}
       <li><a href="/workout/{{ workout.id }}">{{ workout.title }}</a></li>
       {% else %}
-      <li>No matches found.</li>
+      <p>No matches found.</p>
       {% endfor %}
     </ul>
     {% endif %}

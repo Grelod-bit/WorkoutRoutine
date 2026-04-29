@@ -26,7 +26,7 @@
       {% endfor %}
     </ul>
 
-    <h2>Reviews</h2>
+    <h2>Ratings</h2>
     <ul>
       {% for rating in user_ratings | unique(attribute='workout_id') %}
       <li><a href="/workout/{{ rating.workout_id }}">{{ rating.title }}</a></li>

@@ -1,3 +1,4 @@
+import secrets
 import sqlite3
 from flask import Flask
 from flask import abort, redirect, flash, render_template, request, session
@@ -14,6 +15,13 @@ app.secret_key = config.secret_key
 
 def require_login():
     if "user_id" not in session:
+        abort(403)
+
+
+def check_csrf():
+    if "csrf_token" not in request.form:
+        abort(403)
+    if request.form["csrf_token"] != session["csrf_token"]:
         abort(403)
 
 
@@ -76,6 +84,7 @@ def new_workout():
 @app.route("/create_workout", methods=["POST"])
 def create_workout():
     require_login()
+    check_csrf()
 
     title = request.form["title"]
     if not title or len(title) > 50:
@@ -126,6 +135,7 @@ def edit_workout(workout_id):
 @app.route("/update_workout", methods=["POST"])
 def update_workout():
     require_login()
+    check_csrf()
     workout_id = request.form["workout_id"]
     workout = workouts.get_workout(workout_id)
 
@@ -172,6 +182,7 @@ def remove_workout(workout_id):
         return render_template("remove_workout.html", workout=workout)
 
     if request.method == "POST":
+        check_csrf()
         if "remove" in request.form:
             workouts.remove_workout(workout_id)
             return redirect("/")
@@ -192,6 +203,7 @@ def comment(workout_id):
 @app.route("/rate_workout", methods=["POST"])
 def rate_workout():
     require_login()
+    check_csrf()
 
     user_id = session["user_id"]
     workout_id = request.form["workout_id"]
@@ -238,6 +250,7 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
+        session["csrf_token"] = secrets.token_hex(16)
 
         user_id = users.check_login(username, password)
 
