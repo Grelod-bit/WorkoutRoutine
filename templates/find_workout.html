@@ -1,39 +1,32 @@
-<!doctype html>
-<html>
-  <head>
-    <title>Search</title>
-  </head>
+{% extends "layout.html" %}
 
-  <body>
-    <h1>Search</h1>
-    <form action="/find_workout" method="get">
-      <p>
-        Keyword:
-        <input
-          type="text"
-          name="query"
-          value="{{ query }}"
-          pattern="[A-Za-z0-9\s]*[A-Za-z0-9][A-Za-z0-9\s]*"
-          title="Enter at least one letter or number; punctuation-only searches are not allowed."
-        />
-      </p>
-      <input type="submit" value="Search" />
-    </form>
+{% block title %}Search{% endblock %}
 
-    <p>
-      <a href="/">Return</a>
-    </p>
+{% block content %}
+<h2>Search</h2>
+<form action="/find_workout" method="get">
+  <p>
+    Keyword:
+    <input
+      type="text"
+      name="query"
+      value="{{ query }}"
+      pattern="[A-Za-z0-9\s]*[A-Za-z0-9][A-Za-z0-9\s]*"
+      title="Enter at least one letter or number; punctuation-only searches are not allowed."
+    />
+  </p>
+  <input type="submit" value="Search" />
+</form>
 
-    {% if query %}
-    <h2>Results</h2>
+{% if query %}
+<h3>Results</h3>
 
-    <ul>
-      {% for workout in results %}
-      <li><a href="/workout/{{ workout.id }}">{{ workout.title }}</a></li>
-      {% else %}
-      <p>No matches found.</p>
-      {% endfor %}
-    </ul>
-    {% endif %}
-  </body>
-</html>
+<ul>
+  {% for workout in results %}
+  <li><a href="/workout/{{ workout.id }}">{{ workout.title }}</a></li>
+  {% else %}
+  <p>No matches found.</p>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

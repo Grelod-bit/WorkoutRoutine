@@ -1,36 +1,13 @@
-<!doctype html>
-<html>
-  <head>
-    <title>Workout Routine</title>
-  </head>
+{% extends "layout.html" %} 
 
-  <body>
-    <h1>Workout Routine</h1>
+{% block title %}Workout Routine{% endblock %} 
 
-    {% if session.username %}
-    <p>Welcome <a href="/user/{{ session.user_id }}">{{session.username}}</a>!</p>
-    <p>
-      <a href="/logout"> Logout</a>
-    </p>
-    <p>
-      <a href="/new_workout">New workout</a>
-    </p>
-    {% else %}
-    <p>
-      <a href="/login"> Login</a>
-      <a href="/register"> Register</a>
-    </p>
-    {% endif %}
-    <p>
-      <a href="/find_workout">Search</a>
-    </p>
-    <p>
-      <h2>Workouts</h2>
-      <ul>
-      {%for workout in workouts%}
-      <li><a href="/workout/{{ workout.id }}">{{workout.title}}</a></li>
-      {% endfor %}
-      </ul>
-    </p>
-  </body>
-</html>
+{%block content %}
+<h2>Workouts</h2>
+
+<ul>
+  {%for workout in workouts%}
+  <li><a href="/workout/{{ workout.id }}">{{workout.title}}</a></li>
+  {% endfor %}
+</ul>
+{% endblock %}

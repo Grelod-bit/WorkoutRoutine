@@ -1,38 +1,35 @@
-<!doctype html>
-<html>
-  <head>
-    <title>Rate {{ workout.title }}</title>
-  </head>
+{% extends "layout.html" %} 
 
-  <body>
-    <h1>Rate {{ workout.title }}</h1>
-    <form action="/rate_workout" method="post">
-      <p>
-        rate 0 / 10: <br />
-        <input
-          type="text"
-          name="rating"
-          size="2"
-          maxlength="2"
-          required
-          pattern="0|[1-9]|10"
-          title="Enter a number from 0 to 10"
-        />
-      </p>
+{% block title %}Workout Routine{% endblock %} 
 
-      <p>
-        Comment: <br />
-        <textarea
-          name="comment"
-          rows="5"
-          cols="45"
-          maxlength="1000"
-          required
-        ></textarea>
-      </p>
-      <input type="hidden" name="workout_id" value="{{ workout.id }}" />
-      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-      <input type="submit" value="rate" />
-    </form>
-  </body>
-</html>
+{%block content %}
+<body>
+  <h2>Rate {{ workout.title }}</h2>
+  <form action="/rate_workout" method="post">
+    <p>
+      rate 0 / 10: <br />
+      <input
+        type="text"
+        name="rating"
+        size="2"
+        maxlength="2"
+        required
+        pattern="0|[1-9]|10"
+        title="Enter a number from 0 to 10"
+      />
+    </p>
+
+    <p>
+      Comment: <br />
+      <textarea
+        name="comment"
+        rows="5"
+        cols="45"
+        maxlength="1000"
+        required
+      ></textarea>
+    </p>
+    <input type="hidden" name="workout_id" value="{{ workout.id }}" />
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+    <input type="submit" value="rate" />
+{% endblock %} 

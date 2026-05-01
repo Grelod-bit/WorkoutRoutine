@@ -1,16 +1,12 @@
-<!doctype html>
-<html>
-  <head>
-    <title>Remove</title>
-  </head>
+{% extends "layout.html" %} 
 
+{% block title %}Workout Routine{% endblock %} 
+
+{%block content %}
   <body>
-    <h1>Remove</h1>
+    <h2>Remove</h2>
     <p>Are you sure you want to remove this workout?</p>
     <form action="/remove_workout/{{ workout.id }}" method="post">
       <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
       <input type="submit" name="remove" value="Remove workout" />
-      <input type="submit" name="back" value="Return" />
-    </form>
-  </body>
-</html>
+{% endblock %} 

@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+  </head>
+
+  <body>
+    <h1>Workout Routine</h1>
+
+    {% if session.user_id %}
+    <p>
+      Welcome <a href="/user/{{ session.user_id }}">{{session.username}}</a>!
+    </p>
+    {% endif %}
+
+    <p>
+      <a href="/">Main Page</a> | 
+      <a href="/find_workout">Search</a> | 
+      
+      {% if session.user_id %}
+      <a href="/new_workout">New workout</a> |
+      <a href="/logout"> Logout</a>
+      {% else %}
+      <a href="/login"> Login</a> |
+      <a href="/register"> Register</a>
+      {% endif %}
+    </p>
+
+    {% block content %}{% endblock %}
+  </body>
+</html>

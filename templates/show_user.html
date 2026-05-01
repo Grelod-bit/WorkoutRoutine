@@ -1,39 +1,35 @@
-<!doctype html>
-<html>
-  <head>
-    <title>User {{user.username}}</title>
-  </head>
+{% extends "layout.html" %} 
 
-  <body>
-    <h1>User {{user.username}}</h1>
+{% block title %}Workout Routine{% endblock %} 
 
-    <p>User {{user.username}} has a total of :</p>
+{%block content %}
+<h2>User {{user.username}}</h2>
 
-    {% if user_workouts|count == 1 %}
-    <p>{{ user_workouts|count }} workout</p>
-    {% else %}
-    <p>{{ user_workouts|count }} workouts</p>
-    {% endif %} {% if user_ratings|count == 1 %}
-    <p>{{ user_ratings|count }} rating</p>
-    {% else %}
-    <p>{{ user_ratings|count }} ratings</p>
-    {% endif %}
+<p>User {{user.username}} has a total of :</p>
 
-    <h2>Workouts</h2>
-    <ul>
-      {% for workout in user_workouts %}
-      <li><a href="/workout/{{ workout.id }}">{{ workout.title }}</a></li>
-      {% endfor %}
-    </ul>
+<ul>
+  {% if user_workouts|count == 1 %}
+  <li>{{ user_workouts|count }} workout</li>
+  {% else %}
+  <li>{{ user_workouts|count }} workouts</li>
+  {% endif %} {% if user_ratings|count == 1 %}
+  <li>{{ user_ratings|count }} rating</li>
+  {% else %}
+  <li>{{ user_ratings|count }} ratings</li>
+  {% endif %}
+</ul>
 
-    <h2>Ratings</h2>
-    <ul>
-      {% for rating in user_ratings | unique(attribute='workout_id') %}
-      <li><a href="/workout/{{ rating.workout_id }}">{{ rating.title }}</a></li>
-      {% endfor %}
-    </ul>
-    <p>
-      <a href="/">Front Page</a>
-    </p>
-  </body>
-</html>
+<h3>Workouts</h3>
+<ul>
+  {% for workout in user_workouts %}
+  <li><a href="/workout/{{ workout.id }}">{{ workout.title }}</a></li>
+  {% endfor %}
+</ul>
+
+<h3>Ratings</h3>
+<ul>
+  {% for rating in user_ratings | unique(attribute='workout_id') %}
+  <li><a href="/workout/{{ rating.workout_id }}">{{ rating.title }}</a></li>
+  {% endfor %}
+</ul>
+{% endblock %} 

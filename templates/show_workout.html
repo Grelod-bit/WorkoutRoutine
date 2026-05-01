@@ -1,53 +1,48 @@
-<!doctype html>
-<html>
-  <head>
-    <title>{{workout.title}}</title>
-  </head>
+{% extends "layout.html" %} 
 
-  <body>
-    <h1>{{workout.title}}</h1>
-    {% if session.user_id == workout.user_id %}
-    <p>
-      <a href="/edit_workout/{{ workout.id }}">Edit</a>
-      <a href="/remove_workout/{{ workout.id }}">Remove</a>
-    </p>
-    {% endif %}
+{% block title %}Workout Routine{% endblock %} 
 
-    <p>{{workout.description}}</p>
+{%block content %}
+<h2>{{workout.title}}</h2>
+{% if session.user_id == workout.user_id %}
+<p>
+  <a href="/edit_workout/{{ workout.id }}">Edit</a>
+  <a href="/remove_workout/{{ workout.id }}">Remove</a>
+</p>
+{% endif %}
 
-    <p>
-      Created by: <a href="/user/{{ workout.user_id }}">{{workout.username}}</a>
-    </p>
+<p>{{workout.description}}</p>
 
-    {% if classes %}
-    <p>
-      Classes:
-      <ul>
-        {% for class in classes %}
-        <li>{{ class.title }} : {{ class.value }}</li>
-        {% endfor %}
-      </ul>
-    </p>
-    {% endif %}
-    {% if session.user_id != workout.user_id %}
-    <p>
-      <a href="/rate/{{ workout.id }}">Rate</a>
-    </p>
-    {% endif %}
+<p>
+  Created by: <a href="/user/{{ workout.user_id }}">{{workout.username}}</a>
+</p>
 
-    <p>
-      <a href="/">Front Page</a>
-    </p>
+{% if classes %}
+<p>
+  Classes:
+  <ul>
+    {% for class in classes %}
+    <li>{{ class.title }} : {{ class.value }}</li>
+    {% endfor %}
+  </ul>
+</p>
+{% endif %}
 
-    {% if workout_ratings %}
-    <p>
-    <h2>Ratings:</h2>
-    <ul>
-      {% for user_rating in workout_ratings %}
-      <li>{{user_rating.username}} - {{ user_rating.comment }} | Rating: {{ user_rating.rating }} / 10 | Posted at: ({{ user_rating.sent_at }})</li>
-      {% endfor %}
-    </ul>
-    </p>
-    {% endif %}
-  </body>
-</html>
+{% if session.user_id and session.user_id != workout.user_id %}
+<p>
+  <a href="/rate/{{ workout.id }}">Rate</a>
+</p>
+{% endif %}
+
+
+{% if workout_ratings %}
+<p>
+<h3>Ratings:</h3>
+<ul>
+  {% for user_rating in workout_ratings %}
+  <li>{{user_rating.username}} - {{ user_rating.comment }} | Rating: {{ user_rating.rating }} / 10 | Posted at: ({{ user_rating.sent_at }})</li>
+  {% endfor %}
+</ul>
+</p>
+{% endif %}
+{% endblock %} 

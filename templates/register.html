@@ -1,10 +1,8 @@
-<!doctype html>
-<html>
+{% extends "layout.html" %} 
 
-<head>
-  <title>Registration</title>
-</head>
+{% block title %}Workout Routine{% endblock %} 
 
+{%block content %}
 <body>
   <form action="/create" method="post">
     <p>
@@ -20,7 +18,4 @@
       <input type="password" name="password2" />
     </p>
     <input type="submit" value="Create an account" />
-  </form>
-</body>
-
-</html>
+{% endblock %} 
