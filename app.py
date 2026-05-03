@@ -1,5 +1,6 @@
 import secrets
 import sqlite3
+import time
 from flask import Flask
 from flask import abort, redirect, flash, render_template, request, session
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -28,6 +29,7 @@ def check_csrf():
 @app.route("/")
 def index():
     all_workouts = workouts.get_workouts()
+
     return render_template("index.html", workouts=all_workouts)
 
 
@@ -238,6 +240,12 @@ def create():
     except sqlite3.IntegrityError:
         flash("ERROR: Username already taken")
         return redirect("/register")
+
+    user_id = users.check_login(username, password1)
+
+    if user_id:
+        session["user_id"] = user_id
+        session["username"] = username
 
     return redirect("/")
 

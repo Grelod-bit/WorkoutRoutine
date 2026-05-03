@@ -1,8 +1,5 @@
-{% extends "layout.html" %} 
-
-{% block title %}Login{% endblock %} 
-
-{%block content %}
+{% extends "layout.html" %} {% block title %}Login{% endblock %} {%block content
+%}
 <body>
   {% if session.username %}
   <p>You're logged in as {{ session.username }}</p>
@@ -19,7 +16,8 @@
       Password: <br />
       <input type="password" name="password" />
     </p>
+
     <input type="submit" value="Log in" />
   </form>
-  {% endif %}
-{% endblock %} 
+  {% endif %} {% endblock %}
+</body>

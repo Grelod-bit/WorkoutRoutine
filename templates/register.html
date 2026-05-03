@@ -1,8 +1,5 @@
-{% extends "layout.html" %} 
-
-{% block title %}Register{% endblock %} 
-
-{%block content %}
+{% extends "layout.html" %} {% block title %}Register{% endblock %} {%block
+content %}
 <body>
   <form action="/create" method="post">
     <p>
@@ -17,5 +14,8 @@
       Repeat Password: <br />
       <input type="password" name="password2" />
     </p>
+
     <input type="submit" value="Create an account" />
-{% endblock %} 
+    {% endblock %}
+  </form>
+</body>
