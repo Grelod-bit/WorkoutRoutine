@@ -191,7 +191,7 @@ def remove_workout(workout_id):
 
 
 @app.route("/rate/<int:workout_id>")
-def comment(workout_id):
+def rate(workout_id):
     require_login()
     workout = workouts.get_workout(workout_id)
     if not workout:

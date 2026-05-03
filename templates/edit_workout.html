@@ -3,8 +3,8 @@
 {% block title %}Edit Workout{% endblock %}
 
 {% block content %}
-
-
+<h2>{{ workout.title }}</h2>
+<h3>Edit Workout</h3>
 <form action="/update_workout" method="post">
   <p>
     Title: <br />
@@ -41,6 +41,6 @@
   </p>
   {% endfor %}
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+  <input type="submit" value="Return" />
   <input type="submit" value="Update" />
-
 {% endblock %}

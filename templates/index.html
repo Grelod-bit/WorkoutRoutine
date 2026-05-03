@@ -6,6 +6,7 @@
 <div class="workout">
   <a href="/workout/{{ workout.id }}">{{workout.title}}</a> <br />
   <a href="/user/{{ workout.user_id }}">{{workout.username}}</a> <br />
-  Ratings: {{ workout.rating_count }}
+  {%if workout.rating_count == 0%} No ratings. {%else%} Ratings: {{
+  workout.rating_count }} {%endif%}
 </div>
 {% endfor %} {% endblock %}

@@ -83,7 +83,7 @@ def remove_workout(workout_id):
 
 
 def find_workout(query):
-    sql = """SELECT w.id, w.title, classes.id, classes.title
+    sql = """SELECT DISTINCT w.id, w.title
     FROM workouts w
     JOIN workout_classes classes ON classes.workout_id=w.id
     WHERE w.title LIKE ? OR w.description LIKE ? OR classes.title LIKE ? OR classes.value LIKE ?

@@ -1,12 +1,14 @@
-{% extends "layout.html" %} 
-
-{% block title %}Remove Workout{% endblock %} 
-
+{% extends "layout.html" %} {% block title %}Remove Workout{% endblock %}
 {%block content %}
-  <body>
-    <h2>Remove</h2>
-    <p>Are you sure you want to remove this workout?</p>
-    <form action="/remove_workout/{{ workout.id }}" method="post">
-      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-      <input type="submit" name="remove" value="Remove workout" />
-{% endblock %} 
+<body>
+  <h2>{{ workout.title }}</h2>
+  <h3>Remove</h3>
+  <p>Are you sure you want to remove this workout?</p>
+  <form action="/remove_workout/{{ workout.id }}" method="post">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+    <input type="submit" name="back" value="Return" />
+    <input type="submit" name="remove" value="Remove workout" />
+
+    {% endblock %}
+  </form>
+</body>
