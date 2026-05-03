@@ -1,16 +1,14 @@
-{% extends "layout.html" %} 
-
-{% block title %}Rate Workout{% endblock %} 
-
-{%block content %}
+{% extends "layout.html" %} {% block title %}Rate Workout{% endblock %} {%block
+content %}
 <body>
   <h2>Rate {{ workout.title }}</h2>
   <form action="/rate_workout" method="post">
     <p>
-      rate 0 / 10: <br />
+      <label for="rating"> rate 0 / 10: </label> <br />
       <input
         type="text"
         name="rating"
+        id="rating"
         size="2"
         maxlength="2"
         required
@@ -20,9 +18,10 @@
     </p>
 
     <p>
-      Comment: <br />
+      <label for="comment">Comment: </label> <br />
       <textarea
         name="comment"
+        id="comment"
         rows="5"
         cols="45"
         maxlength="1000"
@@ -32,4 +31,6 @@
     <input type="hidden" name="workout_id" value="{{ workout.id }}" />
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="submit" value="rate" />
-{% endblock %} 
+    {% endblock %}
+  </form>
+</body>

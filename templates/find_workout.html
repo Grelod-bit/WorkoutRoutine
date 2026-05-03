@@ -1,15 +1,13 @@
-{% extends "layout.html" %}
-
-{% block title %}Search{% endblock %}
-
-{% block content %}
+{% extends "layout.html" %} {% block title %}Search{% endblock %} {% block
+content %}
 <h2>Search</h2>
 <form action="/find_workout" method="get">
   <p>
-    Keyword:
+    <label for="query">Keyword </label>:
     <input
       type="text"
       name="query"
+      id="query"
       value="{{ query }}"
       pattern="[A-Za-z0-9\s]*[A-Za-z0-9][A-Za-z0-9\s]*"
       title="Enter at least one letter or number; punctuation-only searches are not allowed."
@@ -28,5 +26,4 @@
   <p>No matches found.</p>
   {% endfor %}
 </ul>
-{% endif %}
-{% endblock %}
+{% endif %} {% endblock %}

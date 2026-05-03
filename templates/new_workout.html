@@ -1,21 +1,19 @@
-{% extends "layout.html" %} 
-
-{% block title %}New Workout{% endblock %} 
-
-{%block content %}
+{% extends "layout.html" %} {% block title %}New Workout{% endblock %} {%block
+content %}
 <body>
   <h2>Workout Routine</h2>
 
   <form action="/create_workout" method="post">
     <p>
-      Title: <br />
-      <input type="text" name="title" maxlength="50" required />
+      <label for="title"> Title: </label> <br />
+      <input type="text" name="title" id="title" maxlength="50" required />
     </p>
 
     <p>
-      Description: <br />
+      <label for="description">Description: </label> <br />
       <textarea
         name="description"
+        id="description"
         rows="8"
         cols="60"
         maxlength="1000"
@@ -25,11 +23,12 @@
 
     {% for class in classes %}
     <p>
-      {{ class }}: <br />
+      <label for="class{{ class }}">{{ class }}: </label> <br />
       {% for option in classes[class] %}
       <input
         type="checkbox"
         name="classes"
+        id="class{{ class }}"
         value="{{ class }}:{{ option }}"
       />
       {{ option }} <br />
@@ -38,4 +37,6 @@
     {% endfor %}
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="submit" value="Create" />
-{% endblock %}
+    {% endblock %}
+  </form>
+</body>
