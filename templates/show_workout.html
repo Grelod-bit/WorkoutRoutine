@@ -13,7 +13,7 @@
 
 
 
-<p>{{workout.description}}</p>
+<p>{{workout.description | show_lines}}</p>
 <ul>
   <li>Created by: <a href="/user/{{ workout.user_id }}">{{workout.username}}</a></li>
   {% if classes %}

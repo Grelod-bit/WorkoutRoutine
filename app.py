@@ -1,9 +1,9 @@
 import secrets
 import sqlite3
-import time
 from flask import Flask
 from flask import abort, redirect, flash, render_template, request, session
 from werkzeug.security import generate_password_hash, check_password_hash
+import markupsafe
 import config
 import db
 import workouts
@@ -24,6 +24,13 @@ def check_csrf():
         abort(403)
     if request.form["csrf_token"] != session["csrf_token"]:
         abort(403)
+
+
+@app.template_filter()
+def show_lines(content):
+    content = str(markupsafe.escape(content))
+    content = content.replace("\n", "<br />")
+    return markupsafe.Markup(content)
 
 
 @app.route("/")
