@@ -1,13 +1,11 @@
-{% extends "layout.html" %} 
-
-{% block title %}Workout Routine{% endblock %} 
-
+{% extends "layout.html" %} {% block title %}Workout Routine{% endblock %}
 {%block content %}
 <h2>Workouts</h2>
 
-<ul>
-  {%for workout in workouts%}
-  <li><a href="/workout/{{ workout.id }}">{{workout.title}}</a></li>
-  {% endfor %}
-</ul>
-{% endblock %}
+{%for workout in workouts%}
+<div class="workout">
+  <a href="/workout/{{ workout.id }}">{{workout.title}}</a> <br />
+  <a href="/user/{{ workout.user_id }}">{{workout.username}}</a> <br />
+  Ratings: {{ workout.rating_count }}
+</div>
+{% endfor %} {% endblock %}

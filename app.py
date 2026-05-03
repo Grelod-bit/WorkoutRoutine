@@ -105,9 +105,9 @@ def create_workout():
                 abort(403)
             classes.append((class_title, class_value))
 
-    workouts.add_workout(title, description, user_id, classes)
+    workout_id = workouts.add_workout(title, description, user_id, classes)
 
-    return redirect("/")
+    return redirect("/workout/" + str(workout_id))
 
 
 @app.route("/edit_workout/<int:workout_id>")

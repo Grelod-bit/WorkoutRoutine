@@ -26,9 +26,16 @@ def add_workout(title, description, user_id, classes):
     for title, value in classes:
         db.execute(sql, [workout_id, title, value])
 
+    return workout_id
+
 
 def get_workouts():
-    sql = "SELECT id, title FROM workouts ORDER BY id DESC"
+    sql = """SELECT w.id, w.title, u.id user_id, u.username, COUNT(r.id) rating_count
+    FROM workouts w
+    JOIN users u ON w.user_id = u.id
+    LEFT JOIN ratings r ON w.id = r.workout_id
+    GROUP BY w.id
+    ORDER BY w.id DESC"""
     return db.query(sql)
 
 
@@ -68,6 +75,8 @@ def update_workout(workout_id, title, description, classes):
 
 def remove_workout(workout_id):
     sql = "DELETE FROM workout_classes WHERE workout_id = ?"
+    db.execute(sql, [workout_id])
+    sql = "DELETE FROM ratings WHERE workout_id = ?"
     db.execute(sql, [workout_id])
     sql = "DELETE FROM workouts WHERE id = ?"
     db.execute(sql, [workout_id])
