@@ -4,7 +4,6 @@ import re
 
 from flask import Flask
 from flask import abort, redirect, flash, render_template, request, session
-from werkzeug.security import generate_password_hash, check_password_hash
 import markupsafe
 
 import config
@@ -196,8 +195,7 @@ def remove_workout(workout_id):
         if "remove" in request.form:
             workouts.remove_workout(workout_id)
             return redirect("/")
-        else:
-            return redirect("/workout/" + str(workout_id))
+        return redirect("/workout/" + str(workout_id))
 
 
 @app.route("/rate/<int:workout_id>")
@@ -274,9 +272,9 @@ def login():
             session["user_id"] = user_id
             session["username"] = username
             return redirect("/")
-        else:
-            flash("ERROR: wrong username or password")
-            return redirect("/login")
+
+        flash("ERROR: wrong username or password")
+        return redirect("/login")
 
 
 @app.route("/logout")
