@@ -1,3 +1,5 @@
+# Pylint Report
+
 ************* Module app
 app.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 app.py:5:0: E0401: Unable to import 'flask' (import-error)
